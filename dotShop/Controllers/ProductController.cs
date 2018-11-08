@@ -21,11 +21,11 @@ namespace dotShop.Controllers
             repository = repo;
         }
 
-
-        public ViewResult List(int productPage = 1)
+        public ViewResult List(string category, int productPage = 1)
             => View(new ProductsListViewModel
             {
                 Products = repository.Products
+                    .Where(p => category == null || p.Category == category)
                     .OrderBy(p => p.ProductId)
                     .Skip((productPage - 1) * PageSize)
                     .Take(PageSize),
@@ -34,20 +34,8 @@ namespace dotShop.Controllers
                     CurrentPage = productPage,
                     ItemsPerPage = PageSize,
                     TotalItems = repository.Products.Count()
-                }
+                },
+                CurrentCategory = category
             });
-
-        //public ViewResult List(int productPage = 1)
-        //    => View(repository.Products
-        //        .OrderBy(p => p.ProductId)
-        //        .Skip((productPage - 1) * PageSize)
-        //        .Take(PageSize));
-
-        //public ViewResult List() => View(repository.Products);
-
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
     }
 }
