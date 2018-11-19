@@ -22,7 +22,7 @@ namespace dotShop.Controllers
         }
 
         public ViewResult List(string category, int productPage = 1)
-            => View(new ProductsListViewModel
+            => View(new ProductListViewModel
             {
                 Products = repository.Products
                     .Where(p => category == null || p.Category == category)

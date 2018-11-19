@@ -33,6 +33,8 @@ namespace dotShop
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IProductRepository, EFProductRepository>();
             services.AddMvc();
+            services.AddMemoryCache();
+            services.AddSession();
 
             //C:\Users\Marcin Hubacz\source\repos\dotShop\dotShop
             //dotnet ef migrations add Initial
@@ -46,6 +48,7 @@ namespace dotShop
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
