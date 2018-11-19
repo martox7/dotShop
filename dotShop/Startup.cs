@@ -10,6 +10,8 @@ using dotShop.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 
+
+
 namespace dotShop
 {
     public class Startup
@@ -24,9 +26,11 @@ namespace dotShop
 
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseSqlServer(
+            //        Configuration["Data:dotShopProducts:ConnectionString"]));
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration["Data:dotShopProducts:ConnectionString"]));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IProductRepository, EFProductRepository>();
             services.AddMvc();
 
@@ -42,31 +46,46 @@ namespace dotShop
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
-            app.UseMvc(routes => {
+            app.UseMvc(routes =>
+            {
                 routes.MapRoute(
                     name: null,
                     template: "{category}/Strona{productPage:int}",
-                    defaults: new { controller = "Product",
-                        action = "List" }
+                    defaults: new
+                    {
+                        controller = "Product",
+                        action = "List"
+                    }
                     );
                 routes.MapRoute(
                     name: null,
                     template: "Strona{productPage:int}",
-                    defaults: new {
+                    defaults: new
+                    {
                         controller = "Product",
-                        action = "List", productPage = 1 }
+                        action = "List",
+                        productPage = 1
+                    }
                 );
                 routes.MapRoute(
                     name: null,
                     template: "{category}",
-                    defaults: new { controller = "Product",
-                        action = "List", productPage = 1 }
+                    defaults: new
+                    {
+                        controller = "Product",
+                        action = "List",
+                        productPage = 1
+                    }
                 );
                 routes.MapRoute(
                     name: null,
                     template: "",
-                    defaults: new { controller = "Product",
-                        action = "List", productPage = 1 }
+                    defaults: new
+                    {
+                        controller = "Product",
+                        action = "List",
+                        productPage = 1
+                    }
                 );
 
                 routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
