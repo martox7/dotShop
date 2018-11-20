@@ -1,4 +1,5 @@
 ﻿using System;
+using dotShop.Models;
 
 namespace dotShop.Models.ViewModels
 {
