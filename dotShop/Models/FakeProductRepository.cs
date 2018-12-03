@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace dotShop.Models
 {
-    public class FakeProductRepository : IProductRepository
+    public class FakeProductRepository //: IProductRepository
     {
         public IQueryable<Product> Products => new List<Product>
         {
