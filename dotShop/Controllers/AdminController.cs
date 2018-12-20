@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using dotShop.Models;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace dotShop.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private IProductRepository repository;
@@ -38,14 +40,10 @@ namespace dotShop.Controllers
         public ViewResult Create() => View("Edit", new Product());
 
         [HttpPost]
-        public IActionResult Delete(int productId)
+        public IActionResult SeedDatabase()
         {
-            Product deletedProduct = repository.DeleteProduct(productId);
-            if (deletedProduct != null)
-            {
-                TempData["message"] = $"Usunięto {deletedProduct.Name}.";
-            }
-            return RedirectToAction("Index");
+            SeedData.EnsurePopulated(HttpContext.RequestServices);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -8,14 +8,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace dotShop.Models
 {
-    public class SendData
+    public class SeedData
     {
-
-        public static void EnsurePopulated(IApplicationBuilder app)
+        public static void EnsurePopulated(IServiceProvider services)
         {
-            ApplicationDbContext context = app.ApplicationServices.GetRequiredService<ApplicationDbContext>();
-            context.Database.Migrate();
-
+            ApplicationDbContext context = services.GetRequiredService<ApplicationDbContext>();
+            //context.Database.Migrate();
             if (!context.Products.Any())
             {
                 context.Products.AddRange(
